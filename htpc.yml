@@ -1,0 +1,6 @@
+---
+
+- hosts: htpc
+  become: yes
+  roles:
+    - bootstrap

@@ -1,0 +1,6 @@
+---
+
+- hosts: router
+  become: yes
+  roles:
+    - bootstrap

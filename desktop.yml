@@ -1,0 +1,6 @@
+---
+
+- hosts: desktop
+  become: yes
+  roles:
+    - bootstrap

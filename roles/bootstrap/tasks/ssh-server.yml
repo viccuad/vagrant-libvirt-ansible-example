@@ -1,0 +1,69 @@
+---
+
+- name: install openssh server
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+   - openssh-server
+  notify: restart ssh
+
+
+- name: create ssh keys directory
+  file:
+    path: /etc/ssh/authorized_keys
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+
+- name: configure openssh server
+  template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644
+    validate: '/usr/sbin/sshd -T -f %s'
+  notify: restart ssh
+
+
+- name: be sure sshd is running and enabled
+  service:
+    name: sshd
+    state: started
+    enabled: yes
+
+
+- name: be sure there is no deprecated host keys around
+  file:
+    path: "/etc/ssh/{{ item }}"
+    state: absent
+  with_items:
+    - ssh_host_dsa_key
+    - ssh_host_dsa_key.pub
+  notify: restart ssh
+
+
+- name: Install fail2ban
+  apt:
+    name: fail2ban
+    state: present
+
+
+- name: configure fail2ban
+  template:
+    src: jail.local
+    dest: /etc/fail2ban/jail.local
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart fail2ban
+
+
+- name: be sure fail2ban is running and enabled
+  service:
+    name: fail2ban
+    state: started
+    enabled: yes

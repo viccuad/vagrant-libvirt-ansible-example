@@ -1,0 +1,11 @@
+---
+
+- name: install minimal packages
+  apt:
+    name: "{{ item }}"
+    state: present
+    install_recommends: no
+  with_items:
+    - rsync # for ansible synchronize module
+    - acl   # so ansible can share tmp files with unprivileged users
+    - sudo

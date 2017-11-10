@@ -1,0 +1,6 @@
+---
+
+- import_tasks: packages.yml
+- import_tasks: ssh-server.yml
+- import_tasks: normal-user.yml
+- import_tasks: deploy-user.yml

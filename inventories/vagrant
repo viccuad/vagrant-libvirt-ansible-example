@@ -1,0 +1,54 @@
+[router]
+arouter ansible_host=192.168.111.10 ansible_private_key_file=.vagrant/machines/router/libvirt/private_key
+
+[nas]
+anas ansible_host=192.168.111.5 ansible_private_key_file=.vagrant/machines/nas/libvirt/private_key
+
+[server]
+[server:children]
+router
+nas
+
+[dotfiles]
+adotfiles ansible_host=192.168.111.2 ansible_private_key_file=.vagrant/machines/dotfiles/libvirt/private_key
+[dotfiles:children]
+desktop
+
+[desktop]
+adesktop ansible_host=192.168.111.3 ansible_private_key_file=.vagrant/machines/desktop/libvirt/private_key
+[desktop:children]
+laptop
+
+[laptop]
+alaptop ansible_host=192.168.111.4 ansible_private_key_file=.vagrant/machines/laptop/libvirt/private_key
+
+[htpc]
+anhtpc ansible_host=192.168.111.6 ansible_private_key_file=.vagrant/machines/htpc/libvirt/private_key
+
+[offlinepc]
+anofflinepc ansible_host=192.168.111.7 ansible_private_key_file=.vagrant/machines/offlinepc/libvirt/private_key
+
+[upgradeable]
+[upgradeable:children]
+router
+nas
+htpc
+
+# all are part of the group vagrant:
+[vagrant]
+arouter
+anas
+aserver
+adotfiles
+adesktop
+alaptop
+ahtpc
+aofflinepc
+
+[all:vars]
+host_key_checking=False
+ansible_connection=ssh
+ansible_user=vagrant
+become_user=vagrant
+deploy_user=vagrant
+normal_user=john

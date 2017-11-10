@@ -1,0 +1,28 @@
+---
+
+- name: restart ssh
+  service:
+    name: ssh
+    state: restarted
+
+
+- name: restart fail2ban
+  service:
+    name: fail2ban
+    state: restarted
+
+
+- name: restart cron
+  service:
+    name: cron
+    state: restarted
+
+
+- name: restart ntp
+  service:
+    name: ntp
+    state: restarted
+
+
+- name: reload firewalld
+  command: firewall-cmd --reload

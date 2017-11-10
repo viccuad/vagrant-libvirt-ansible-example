@@ -1,0 +1,6 @@
+---
+
+- hosts: nas
+  become: yes
+  roles:
+    - bootstrap

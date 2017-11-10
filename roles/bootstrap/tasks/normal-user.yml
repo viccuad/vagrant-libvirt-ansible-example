@@ -1,0 +1,26 @@
+---
+
+- name: create user group {{ normal_user }}
+  group:
+    name: "{{ normal_user }}"
+    state: present
+    gid: 1001
+
+
+- name: create user {{ normal_user }}
+  user:
+    name: "{{ normal_user }}"
+    comment: "{{ normal_user }}"
+    uid: 1001
+    groups: "sudo,{{ normal_user }},tty,mail"
+    # shell: /bin/zsh TODO
+  become: yes
+
+
+- name: add ssh key of user {{ normal_user }}
+  copy:
+    src: "{{ normal_user }}.pub"
+    dest: "/etc/ssh/authorized_keys/{{ normal_user }}.pub"
+    owner: root
+    group: root
+    mode: 644

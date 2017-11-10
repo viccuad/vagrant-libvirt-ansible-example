@@ -1,0 +1,6 @@
+---
+
+- hosts: laptop
+  become: yes
+  roles:
+    - bootstrap

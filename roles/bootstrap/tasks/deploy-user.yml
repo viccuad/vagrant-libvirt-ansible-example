@@ -1,0 +1,38 @@
+---
+
+- name: Create deploy group
+  group:
+    name: "{{ deploy_user }}"
+    state: present
+
+
+- name: Create deploy user
+  user:
+    name: "{{ deploy_user }}"
+    comment: "Deploy User"
+    groups: "sudo,{{ deploy_user }}"
+  become: yes
+
+
+- name: Add ssh key of deploy user (production env)
+  file:
+    src: "{{ normal_user }}.pub"
+    dest: "/etc/ssh/authorized_keys/{{ deploy_user }}.pub"
+    owner: root
+    group: root
+    mode: 644
+    state: link
+  become: yes
+  when: "'vagrant' not in group_names"
+
+
+- name: Add ssh key of deploy user (vagrant env)
+  copy:
+    remote_src: True
+    src: "/home/vagrant/.ssh/authorized_keys"
+    dest: "/etc/ssh/authorized_keys/{{ deploy_user }}.pub"
+    owner: root
+    group: root
+    mode: 644
+  become: yes
+  when: "'vagrant' in group_names"
