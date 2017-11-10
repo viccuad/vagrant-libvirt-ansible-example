@@ -1,4 +1,7 @@
-This is an example of using vagrant-libvirt with ansible. Why?
+This is an example of using vagrant-libvirt with ansible.
+
+Why?
+
 Because for having a working ansible setup mimicking production and at the same
 time interacting with vagrant, one needs to:
 
@@ -16,11 +19,11 @@ time interacting with vagrant, one needs to:
 
 # Network layout #
 
-An isolated LAN network is simulated by providing an unmanaged switch, `switch_lan`.
-A static IP is created for ansible to provision the machines, `ansible_mgmt`,
-with NAT to the kvm host.
-Vagrant-libvirt plugin creates its own DHCP network with NAT to the kvm host for
-ssh-ing with the vagrant user, `vagrant-libvirt`.
+- An isolated LAN network is simulated by providing an unmanaged switch, `switch_lan`.
+- A static IP is created for ansible to provision the machines, `ansible_mgmt`,
+  with NAT to the kvm host.
+- Vagrant-libvirt plugin creates its own DHCP network with NAT to the kvm host for
+  ssh-ing with the vagrant user, `vagrant-libvirt`.
 
 
 # Deploying against Vagrant #
